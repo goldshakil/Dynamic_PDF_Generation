@@ -63,18 +63,29 @@ def create_report(patient_name, interp_date, study_date, patient_code, interp_dr
     pdf.cell(w=(WIDTH-2*25)/2, h=4,
              txt=f'ODI: {odi}', align='L', ln=1)
     pdf.cell(w=(WIDTH-2*25)/2, h=4,
-             txt=f'Interp. Date: {interp_date}', align='L')
+             txt=f'Recording Time (min): {recording_time}', align='L')
     pdf.cell(w=(WIDTH-2*25)/2, h=4,
-             txt=f'DOB: {dob}', align='L', ln=1)
+             txt=f'Mean Sp02 Sat: {mean_spo2}%', align='L', ln=1)
     pdf.cell(w=(WIDTH-2*25)/2, h=4,
-             txt=f'Study Date: {study_date}', align='L')
+             txt=f'Monitoring Time (min): {monitoring_time}', align='L')
     pdf.cell(w=(WIDTH-2*25)/2, h=4,
-             txt=f'Height: {height} in.', align='L', ln=1)
+             txt=f'Min. Sp02 Desat: {min_spo2}%', align='L', ln=1)
     pdf.cell(w=(WIDTH-2*25)/2, h=4,
-             txt=f'Patient Code: {patient_code}', align='L')
+             txt=f'AHI: {ahi}', align='L')
     pdf.cell(w=(WIDTH-2*25)/2, h=4,
-             txt=f'Weight: {weight} lbs.', align='L', ln=1)
+             txt=f'Mean Heart Rate: {mean_heart_rate}', align='L', ln=1)
+    pdf.ln(3)
+
+    pdf.set_font(family='Arial', style='', size=9)
+    pdf.multi_cell(
+        w=0, h=4, txt='AHI=Apneas + Hypopneas per hour of sleep. All apneas and hypopneas must be at least 10 seconds in duration and have a minimum of 4% associated desaturation. AHI calculated using Remmers Respiratory Disturbance Index.ODI=Oxygen desaturation of at least 4% from baseline per hour of sleep')
     pdf.ln(5)
+
+    pdf.cell(w=18, h=4,
+             txt='Diagnosis: ', align='L')
+    pdf.set_font(family='Arial', style='B', size=10)
+    pdf.cell(w=(WIDTH-2*25-18), h=4,
+             txt=f'{diagnosis}', align='L', ln=1)
 
     # Second Page
     # Output
