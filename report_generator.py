@@ -1,9 +1,8 @@
 from fpdf import FPDF
-from datetime import datetime, timedelta
-import os
 
 WIDTH = 210
 HEIGHT = 297
+SIGN_LOCATION_Y = 243
 
 
 class recommendation:
@@ -111,8 +110,29 @@ def create_report(patient_name, interp_date, study_date, patient_code, interp_dr
             pdf.cell(w=8, h=4, txt='  -', align='L')
             pdf.multi_cell(w=(WIDTH-2*25-18), h=4, txt=j)
         pdf.ln(2)
+    pdf.ln(2)
+
+    pdf.multi_cell(
+        w=0, h=4, txt='Clinical follow-up as deemed necessary would be appropriate. Patient should be advised on the long term consequences of OSA if left untreated, need for treatment, and close follow up. Retesting or follow up is recommended to ensure the apnea is controlled and the symptoms are relieved on the chosen therapy. ')
+    pdf.ln(5)
+
+    pdf.multi_cell(
+        w=0, h=4, txt='Untreated obstructive sleep apnea is associated with hypertension, heart disease, stroke, daytime sleepiness, cognitive dysfunction, mood disorders and sudden death.')
+    pdf.ln(5)
+
+    pdf.ln(SIGN_LOCATION_Y-pdf.get_y())
+    pdf.cell(w=50, h=4, txt="Sincerely,", align='L')
+    pdf.image('resources/sign.png',
+              x=20, y=SIGN_LOCATION_Y+5, w=60, type='PNG')
+    pdf.ln(20)
+    pdf.multi_cell(
+        w=0, h=4, txt=f'Dr.{interp_dr}\nDiplomate ABIM-Sleep Medicine\nElectronically Signed')
+    pdf.ln(5)
 
     # Second Page
+
+    # Third Page
+
     # Output
     pdf.output('sibel-report.pdf', 'F')
 
