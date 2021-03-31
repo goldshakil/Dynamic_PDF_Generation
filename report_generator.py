@@ -3,6 +3,10 @@ from fpdf import FPDF
 WIDTH = 210
 HEIGHT = 297
 SIGN_LOCATION_Y = 243
+LEFT_MARGIN = 25
+RIGHT_MARGIN = 25
+MARGIN = LEFT_MARGIN+RIGHT_MARGIN
+REMAINING_WIDTH = WIDTH-MARGIN
 
 
 class recommendation:
@@ -14,7 +18,7 @@ class recommendation:
         self.sub_list.append(sub_list_data)
 
 
-def create_report(patient_name, interp_date, study_date, patient_code, interp_dr, sex, dob, height, weight, bmi, recording_time, monitoring_time, ahi, odi, mean_spo2, min_spo2, mean_heart_rate, diagnosis, recommendations):
+def create_report(patient_name, interp_date, study_date, patient_code, interp_dr, sex, dob, height, weight, bmi, recording_time, monitoring_time, ahi, odi, mean_spo2, min_spo2, mean_heart_rate, diagnosis, recommendations, age):
     pdf = FPDF()
     pdf.set_left_margin(margin=25)
     pdf.set_right_margin(margin=25)
@@ -35,25 +39,25 @@ def create_report(patient_name, interp_date, study_date, patient_code, interp_dr
     pdf.cell(w=0, h=4, txt='HOME SLEEP TEST ANALYSIS REPORT', align='L', ln=1)
     pdf.ln(5)
 
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Patient Name: {patient_name}', align='L')
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Sex: {sex}', align='L', ln=1)
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Interp. Date: {interp_date}', align='L')
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'DOB: {dob}', align='L', ln=1)
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Study Date: {study_date}', align='L')
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Height: {height} in.', align='L', ln=1)
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Patient Code: {patient_code}', align='L')
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Weight: {weight} lbs.', align='L', ln=1)
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Interp Physician: {interp_dr}', align='L')
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'BMI: {bmi}', align='L', ln=1)
     pdf.ln(5)
 
@@ -66,21 +70,21 @@ def create_report(patient_name, interp_date, study_date, patient_code, interp_dr
     pdf.ln(2)
 
     pdf.set_font(family='Arial', style='', size=10)
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Study Date: {study_date}', align='L')
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'ODI: {odi}', align='L', ln=1)
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Recording Time (min): {recording_time}', align='L')
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Mean Sp02 Sat: {mean_spo2}%', align='L', ln=1)
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Monitoring Time (min): {monitoring_time}', align='L')
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Min. Sp02 Desat: {min_spo2}%', align='L', ln=1)
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'AHI: {ahi}', align='L')
-    pdf.cell(w=(WIDTH-2*25)/2, h=4,
+    pdf.cell(w=(REMAINING_WIDTH)/2, h=4,
              txt=f'Mean Heart Rate: {mean_heart_rate}', align='L', ln=1)
     pdf.ln(3)
 
@@ -92,7 +96,7 @@ def create_report(patient_name, interp_date, study_date, patient_code, interp_dr
     pdf.cell(w=18, h=4,
              txt='Diagnosis: ', align='L')
     pdf.set_font(family='Arial', style='B', size=10)
-    pdf.cell(w=(WIDTH-2*25-18), h=4,
+    pdf.cell(w=(REMAINING_WIDTH-18), h=4,
              txt=f'{diagnosis}', align='L', ln=1)
     pdf.ln(5)
 
@@ -103,12 +107,12 @@ def create_report(patient_name, interp_date, study_date, patient_code, interp_dr
     for i in recommendations:
         pdf.cell(w=8, h=4,
                  txt='  -', align='L')
-        pdf.multi_cell(w=(WIDTH-2*25-18), h=4,
+        pdf.multi_cell(w=(REMAINING_WIDTH-18), h=4,
                        txt=i.recommendation_data)
         for j in i.sub_list:
             pdf.cell(w=8, h=4, align='L')
             pdf.cell(w=8, h=4, txt='  -', align='L')
-            pdf.multi_cell(w=(WIDTH-2*25-18), h=4, txt=j)
+            pdf.multi_cell(w=(REMAINING_WIDTH-18), h=4, txt=j)
         pdf.ln(2)
     pdf.ln(2)
 
@@ -127,9 +131,61 @@ def create_report(patient_name, interp_date, study_date, patient_code, interp_dr
     pdf.ln(20)
     pdf.multi_cell(
         w=0, h=4, txt=f'Dr.{interp_dr}\nDiplomate ABIM-Sleep Medicine\nElectronically Signed')
-    pdf.ln(5)
 
     # Second Page
+    pdf.add_page()
+
+    pdf.image('resources/philips-logo.png',
+              x=LEFT_MARGIN, y=10, w=60, type='PNG')
+    pdf.ln(15)
+
+    pdf.set_font(family='Arial', style='B', size=20)
+    pdf.cell(w=60, h=4)
+    pdf.cell(w=120, h=10, txt='Sleep Test Report', align='C', ln=1)
+    pdf.ln(5)
+
+    pdf.set_font(family='Arial', style='B', size=10)  # Table Header
+    pdf.set_draw_color(r=0, g=102, b=204)
+    pdf.set_fill_color(r=213, g=227, b=187)
+    pdf.cell(w=100, h=7, align='L', border=1, fill=True)
+    pdf.cell(w=REMAINING_WIDTH-100, h=7,
+             txt=f'Study Date: {study_date}', align='L', border=1, fill=True, ln=1)
+
+    pdf.set_font(family='Arial', style='B', size=10)  # Row 1
+    pdf.cell(w=20, h=5, txt='Patient', align='L', border=1)
+    pdf.set_font(family='Arial', style='', size=10)
+    pdf.cell(w=60, h=5, txt=f'{patient_name}', align='L', border=1)
+    pdf.set_font(family='Arial', style='B', size=10)
+    pdf.cell(w=20, h=5, txt='Recording', align='L', border=1)
+    pdf.set_font(family='Arial', style='', size=10)
+    pdf.cell(w=60, h=5, txt='Alice NightOne', align='L', border=1, ln=1)
+
+    pdf.set_font(family='Arial', style='B', size=10)  # Row 2
+    pdf.cell(w=20, h=5, txt='Sex', align='L', border=1)
+    pdf.set_font(family='Arial', style='', size=10)
+    pdf.cell(w=60, h=5, txt=f'{sex}', align='L', border=1)
+    pdf.set_font(family='Arial', style='B', size=10)
+    pdf.cell(w=20, h=5, txt='Height', align='L', border=1)
+    pdf.set_font(family='Arial', style='', size=10)
+    pdf.cell(w=60, h=5, txt=f'{height} in.', align='L', border=1, ln=1)
+
+    pdf.set_font(family='Arial', style='B', size=10)  # Row 3
+    pdf.cell(w=20, h=5, txt='DOB', align='L', border=1)
+    pdf.set_font(family='Arial', style='', size=10)
+    pdf.cell(w=60, h=5, txt=f'{dob}', align='L', border=1)
+    pdf.set_font(family='Arial', style='B', size=10)
+    pdf.cell(w=20, h=5, txt='Weight', align='L', border=1)
+    pdf.set_font(family='Arial', style='', size=10)
+    pdf.cell(w=60, h=5, txt=f'{weight} lbs.', align='L', border=1, ln=1)
+
+    pdf.set_font(family='Arial', style='B', size=10)  # Row 4
+    pdf.cell(w=20, h=5, txt='Age', align='L', border=1)
+    pdf.set_font(family='Arial', style='', size=10)
+    pdf.cell(w=60, h=5, txt=f'{age} years', align='L', border=1)
+    pdf.set_font(family='Arial', style='B', size=10)
+    pdf.cell(w=20, h=5, txt='BMI', align='L', border=1)
+    pdf.set_font(family='Arial', style='', size=10)
+    pdf.cell(w=60, h=5, txt=f'{bmi}', align='L', border=1, ln=1)
 
     # Third Page
 
@@ -153,4 +209,4 @@ if __name__ == '__main__':
     recommendation_list.append(recommendation2)
 
     create_report(patient_name='Dahab Shakeel', interp_date='9/3/2019', study_date='8/26/2019', patient_code='TS082619',
-                  interp_dr='Chandra Matadeen-Ali, MD', sex='M', dob='10/23/1998', height=184, weight=72, bmi=21.3, recording_time=406.3, monitoring_time=400.8, ahi=35.2, odi=42.3, mean_spo2=92, min_spo2=74, mean_heart_rate=77.5, diagnosis='Severe Obstructive Sleep Apnea (G47.33)', recommendations=recommendation_list)
+                  interp_dr='Chandra Matadeen-Ali, MD', sex='M', dob='10/23/1998', height=184, weight=160, bmi=21.3, recording_time=406.3, monitoring_time=400.8, ahi=35.2, odi=42.3, mean_spo2=92, min_spo2=74, mean_heart_rate=77.5, diagnosis='Severe Obstructive Sleep Apnea (G47.33)', recommendations=recommendation_list, age=22)
