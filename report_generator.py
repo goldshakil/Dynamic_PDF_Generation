@@ -18,7 +18,7 @@ class recommendation:
         self.sub_list.append(sub_list_data)
 
 
-def create_report(patient_name, interp_date, study_date, patient_code, interp_dr, sex, dob, height, weight, bmi, recording_time, monitoring_time, ahi, odi, mean_spo2, min_spo2, mean_heart_rate, diagnosis, recommendations, age, lights_off_time, lights_on_time, bed_time):
+def create_report(patient_name, interp_date, study_date, patient_code, interp_dr, sex, dob, height, weight, bmi, recording_time, monitoring_time, ahi, odi, mean_spo2, min_spo2, mean_heart_rate, diagnosis, recommendations, age, lights_off_time, lights_on_time, bed_time, oai, cai):
     pdf = FPDF()
     pdf.set_left_margin(margin=25)
     pdf.set_right_margin(margin=25)
@@ -230,6 +230,31 @@ def create_report(patient_name, interp_date, study_date, patient_code, interp_dr
     pdf.set_font(family='Arial', style='', size=10)  # Row 1
     pdf.multi_cell(
         w=REMAINING_WIDTH, h=4, txt='The study was recorded on a Philips Respironics Alice NightOne device using 1 RIP effort belt and a pressure based flow sensor. The heart rate is derived from the oximeter sensor and the snore signal is derived from the pressure sensor. The device also records body position and uses it to determine the monitoring time(sleep/wake periods).', align='', border=1)
+    pdf.ln(5)
+
+    pdf.set_font(family='Arial', style='B', size=10)  # Table-4 Header
+    pdf.cell(w=REMAINING_WIDTH, h=7, txt='Summary',
+             align='L', border=1, fill=True, ln=1)
+
+    pdf.set_fill_color(r=250, g=191, b=143)
+    pdf.cell(w=20, h=6, txt='AHI', align='C', border=1)  # Row 1
+    pdf.cell(w=20, h=6, txt=f'{ahi}', align='C', border=1, fill=True)
+    pdf.cell(w=20, h=6, txt='OAI', align='C', border=1)
+    pdf.cell(w=20, h=6, txt=f'{oai}', align='C', border=1, fill=True)
+    pdf.cell(w=20, h=6, txt='CAI', align='C', border=1)
+    pdf.cell(w=20, h=6, txt=f'{cai}', align='C', border=1, fill=True)
+    pdf.cell(w=20, h=6, txt='Min Desat', align='C', border=1)
+    pdf.cell(w=20, h=6, txt=f'{min_spo2}',
+             align='C', border=1, fill=True, ln=1)
+
+    pdf.set_font(family='Arial', style='', size=8.5)
+    pdf.set_text_color(r=107, g=107, b=107)
+    pdf.multi_cell(
+        w=REMAINING_WIDTH, h=4, txt='AHI is the number of respiratory events per hour. OAI is the number of obstructive apneas per hour. CAI is the number of central apneas per hour. Lowest Desat is the lowest blood oxygen level that lasted at least 2 seconds.', align='', )
+    pdf.ln(5)
+
+    pdf.set_font(family='Arial', style='B', size=8.5)
+    pdf.set_text_color(r=0, g=0, b=0)
 
     # Third Page
 
@@ -253,4 +278,4 @@ if __name__ == '__main__':
     recommendation_list.append(recommendation2)
 
     create_report(patient_name='Dahab Shakeel', interp_date='9/3/2019', study_date='8/26/2019', patient_code='TS082619',
-                  interp_dr='Chandra Matadeen-Ali, MD', sex='M', dob='10/23/1998', height=184, weight=160, bmi=21.3, recording_time=406.3, monitoring_time=400.8, ahi=35.2, odi=42.3, mean_spo2=92, min_spo2=74, mean_heart_rate=77.5, diagnosis='Severe Obstructive Sleep Apnea (G47.33)', recommendations=recommendation_list, age=22, lights_off_time="11:00:25 PM", lights_on_time="5:46:43 AM", bed_time=406.3)
+                  interp_dr='Chandra Matadeen-Ali, MD', sex='M', dob='10/23/1998', height=184, weight=160, bmi=21.3, recording_time=406.3, monitoring_time=400.8, ahi=35.2, odi=42.3, mean_spo2=92, min_spo2=74, mean_heart_rate=77.5, diagnosis='Severe Obstructive Sleep Apnea (G47.33)', recommendations=recommendation_list, age=22, lights_off_time="11:00:25 PM", lights_on_time="5:46:43 AM", bed_time=406.3, oai=15.3, cai=4.3)
