@@ -366,7 +366,22 @@ def create_report(patient_name, interp_date, study_date, patient_code, interp_dr
     pdf.cell(w=14, h=6, txt='23', align='C', border=1)
     pdf.cell(w=14, h=6, txt='0', align='C', border=1, ln=1)
 
-    # Third Page
+    pdf.set_font(family='Arial', style='B', size=8)  # Row 8
+    pdf.cell(w=90, h=6, txt='Time in Position', align='L', border=1)
+    pdf.set_font(family='Arial', style='', size=8)
+    pdf.cell(w=14, h=6, txt='1', align='C', border=1)
+    pdf.cell(w=14, h=6, txt='3', align='C', border=1)
+    pdf.cell(w=14, h=6, txt='2', align='C', border=1)
+    pdf.cell(w=14, h=6, txt='23', align='C', border=1)
+    pdf.cell(w=14, h=6, txt='0', align='C', border=1, ln=1)
+
+    pdf.set_font(family='Arial', style='B', size=8)  # Row 9
+    pdf.cell(w=90, h=6, txt='Position', align='L', border=1)
+    pdf.cell(w=14, h=6, txt='1', align='C', border=1)
+    pdf.cell(w=14, h=6, txt='3', align='C', border=1)
+    pdf.cell(w=14, h=6, txt='2', align='C', border=1)
+    pdf.cell(w=14, h=6, txt='23', align='C', border=1)
+    pdf.cell(w=14, h=6, txt='0', align='C', border=1, ln=1)
 
     # Output
     pdf.output('sibel-report.pdf', 'F')
